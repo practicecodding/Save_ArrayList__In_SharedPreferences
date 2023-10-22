@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     EditText edName,edAge;
     Button button;
-    TextView textView;
+    TextView textView,count;
     ArrayList <ModelClass> arrayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +29,25 @@ public class MainActivity extends AppCompatActivity {
         edAge = findViewById(R.id.edAge);
         button = findViewById(R.id.button);
         textView = findViewById(R.id.textView);
+        count = findViewById(R.id.count);
 
         loadData();
+
+        count.setText(""+arrayList.size());
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveData(edName.getText().toString(),edAge.getText().toString());
                 loadData();
+                count.setText(""+arrayList.size());
+            }
+        });
+
+        count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrayList = new ArrayList<>();
             }
         });
 
@@ -59,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             textView.setText("");
             for (int x=0; x<arrayList.size(); x++){
-                textView.append(arrayList.get(x).name+"\n"+arrayList.get(x).age+"\n\n");
+                int num = x+1;
+                textView.append(num+". "+arrayList.get(x).name+"\n    "+arrayList.get(x).age+"\n\n");
             }
         }
 
