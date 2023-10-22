@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveData(edName.getText().toString(),edAge.getText().toString());
+                loadData();
             }
         });
 
@@ -49,17 +50,16 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPreferences.getString("product_data",null);
         Type type = new TypeToken<ArrayList<ModelClass>>(){
-
         }.getType();
 
         arrayList = gson.fromJson(json,type);
 
         if (arrayList == null){
             arrayList = new ArrayList<>();
-            textView.setText(""+0);
         } else {
+            textView.setText("");
             for (int x=0; x<arrayList.size(); x++){
-                textView.setText(arrayList.get(x).name+"\n");
+                textView.append(arrayList.get(x).name+"\n"+arrayList.get(x).age+"\n\n");
             }
         }
 
@@ -75,8 +75,7 @@ public class MainActivity extends AppCompatActivity {
         String json = gson.toJson(arrayList);
         editor.putString("product_data",json);
         editor.apply();
-        textView.setText("List Data\n");
-        loadData();
+
 
     }
 }
