@@ -16,7 +16,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    EditText edName,edAge;
+    EditText edName,edAge,edId,edUrl;
     Button button;
     TextView textView,count;
     ArrayList <ModelClass> arrayList;
@@ -27,8 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
         edName = findViewById(R.id.edName);
         edAge = findViewById(R.id.edAge);
+        edUrl = findViewById(R.id.edUrl);
         button = findViewById(R.id.button);
         textView = findViewById(R.id.textView);
+        edId = findViewById(R.id.edId);
         count = findViewById(R.id.count);
 
         loadData();
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveData(edName.getText().toString(),edAge.getText().toString());
+                saveData(edName.getText().toString(),edId.getText().toString(),edAge.getText().toString(),edUrl.getText().toString());
                 loadData();
                 count.setText(""+arrayList.size());
             }
@@ -71,23 +73,22 @@ public class MainActivity extends AppCompatActivity {
             textView.setText("");
             for (int x=0; x<arrayList.size(); x++){
                 int num = x+1;
-                textView.append(num+". "+arrayList.get(x).name+"\n    "+arrayList.get(x).age+"\n\n");
+                textView.append(arrayList.get(x).name+"\n"+arrayList.get(x).age+"\n"+arrayList.get(x).id+"\n"+arrayList.get(x).url+"\n\n");
             }
         }
 
     }
 
-    private void saveData(String name, String age) {
+    private void saveData(String name,String id, String age,String url) {
 
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name),MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         Gson gson = new Gson();
-        arrayList.add(new ModelClass(name,Integer.parseInt(age)));
+        arrayList.add(new ModelClass(name,id,age,url));
         String json = gson.toJson(arrayList);
         editor.putString("product_data",json);
         editor.apply();
-
 
     }
 }
