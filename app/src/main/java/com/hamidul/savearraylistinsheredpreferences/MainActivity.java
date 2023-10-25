@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             textView.setText("");
             for (int x=0; x<arrayList.size(); x++){
                 int num = x+1;
-                textView.append(arrayList.get(x).name+"\n"+arrayList.get(x).age+"\n"+arrayList.get(x).id+"\n"+arrayList.get(x).url+"\n\n");
+                textView.append(arrayList.get(x).name+"\n"+arrayList.get(x).age+"\n"+arrayList.get(x).url+"\n\n");
             }
         }
 
